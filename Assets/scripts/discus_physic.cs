@@ -9,25 +9,23 @@ public class discus_physic : MonoBehaviour
     public Text debug_text;
     public GameObject crosshair;
     public Camera cam;
+    public int max_crosshair_radius;
+    
 
-    private Vector2 pos_start, pos_end, force;
+    private Vector2 pos_start, pos_end, pos_mov, force;
 
     // Start is called before the first frame update
     void Start()
     {
         debug_text.text = "Debug";
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //...
-        }
-
         check_for_touchEvent();
-        
+        cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
     }
 
     private void check_for_touchEvent()
@@ -37,41 +35,72 @@ public class discus_physic : MonoBehaviour
 
             if (Input.touches[0].phase == TouchPhase.Began)
             {
-                //debug_text.text = "";
-                //debug_text.text = debug_text.text + Input.touches[0].phase + " | " + Input.touches[0].position + '\n';
                 pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
             }
             else
             {
                 if (Input.touches[0].phase == TouchPhase.Ended)
                 {
-                    //debug_text.text = debug_text.text + Input.touches[0].phase + " | " + Input.touches[0].position + '\n';
                     pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                     force = new Vector2(pos_start.x-pos_end.x, pos_start.y-pos_end.y);
-                    //debug_text.text = debug_text.text + " Force: " + force+'\n';
                     discus_shoot(force);
+                } else
+                {
+                    if (Input.touches[0].phase == TouchPhase.Moved)
+                    {
+                        pos_mov = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                        force = new Vector2(pos_start.x - pos_mov.x, pos_start.y - pos_mov.y);
+                        move_crosshair(force);
+                    }
                 }
             }
         }
     }
 
+    private void move_crosshair (Vector2 v)
+    {
+        crosshair.transform.position = get_crosshair_position(v);
+        
+    }
+
     private void discus_shoot(Vector2 v)
     {
-        float alpha = get_ScalfaktorToForce(v, 10).y;//Festlegung, jeder Swipe nach unten erhöht den Grad
-        float r = get_ScalfaktorToForce(v, 1).x;
-        float x = Mathf.Cos(alpha) * r;
-        float y = Mathf.Sin(alpha) * r;
+        crosshair.transform.position = get_crosshair_position(v);
 
-        debug_text.text = debug_text.text + " Alpha: " + alpha+'\n';
-        debug_text.text = debug_text.text + " Radius: " + r + '\n';
-        debug_text.text = debug_text.text + " X: " + x + '\n';
-        debug_text.text = debug_text.text + " Y: " + y + '\n';
-
-        crosshair.transform.position = new Vector2(gameObject.transform.position.x+x, gameObject.transform.position.y+y);
-
+        float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
         int factor = 100;
-        get_ScalfaktorToForce(v, factor);
-        gameObject.GetComponent<Rigidbody2D>().AddForce(v);
+        debug_text.text = get_ScalfaktorToForce(v, factor).ToString()+'\n';
+        debug_text.text = debug_text.text + alpha + '\n';
+        debug_text.text = debug_text.text + v;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2 ( get_ScalfaktorToForce(v, factor).x, (alpha*(factor)) ));
+    }
+
+    private Vector2 get_crosshair_position (Vector2 v)
+    {
+        Vector2 pos = new Vector2 (0,0);
+        float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
+        
+        float r = 0;
+        if (get_ScalfaktorToForce(v, 1).x < max_crosshair_radius)
+        {
+            r = get_ScalfaktorToForce(v, 1).x;
+        } else
+        {
+            r = max_crosshair_radius;
+        }       
+        
+        float x = Mathf.Cos((float) DegreeToRadian((double) alpha)) * r;//cos funktion prüfen
+        float y =0;
+        if (v.x>0)
+        {
+            y = Mathf.Sin((float)DegreeToRadian((double)alpha)) * r;
+        } else
+        {
+            y = Mathf.Sin((float)DegreeToRadian((double)alpha)) * r*-1;
+        }
+
+        pos = new Vector2(gameObject.transform.position.x + x, gameObject.transform.position.y + y);
+        return pos;
     }
 
     private Vector2 get_ScalfaktorToForce(Vector2 v, int factor)
@@ -113,4 +142,67 @@ public class discus_physic : MonoBehaviour
         return scale;
     }
 
+    private float ScreenToFrustum (float px)
+    {
+        float distance = cam.orthographicSize * 2;//Camera's half-size when in orthographic mode.
+        float frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float frustumWidth = frustumHeight * cam.aspect;
+
+        float ScreenHeight = Screen.height;
+        float ScreenWidth = Screen.width;
+
+        float result = (100 / ScreenWidth * px) * (frustumWidth);
+
+        return result;
+    }
+
+    private float getAlpha (Vector2 v)
+    {
+        
+        float alpha = (360 / (Screen.width * 0.5f)) * v.y;
+        
+        
+        if (v.x > 0)
+        {
+            if (v.y>0)
+            {
+                if (alpha>90)
+                {
+                    alpha = 90;
+                }
+            } else
+            {
+                if (alpha<-90)
+                {
+                    alpha = -90;
+                    
+                }
+            }
+        }
+        else
+        {
+            if (v.y > 0)
+            {
+                if (alpha > 90)
+                {
+                    alpha = 90;
+                }
+            }
+            else
+            {
+                if (alpha < -90)
+                {
+                    alpha = -90;
+
+                }
+            }
+        }
+        
+        return alpha;
+    }
+
+    private double DegreeToRadian(double angle)
+    {
+        return Math.PI * angle / 180.0;
+    }
 }

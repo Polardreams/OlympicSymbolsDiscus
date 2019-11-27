@@ -6,19 +6,20 @@ using UnityEngine.UI;
 
 public class discus_physic : MonoBehaviour
 {
-    public Text debug_text;
+    public Text debug_text, discus_info;
     public GameObject crosshair;
     public Camera cam;
     public int max_crosshair_radius;
-    
+    private Vector2 discus_startPosition;
+
+
 
     private Vector2 pos_start, pos_end, pos_mov, force;
 
     // Start is called before the first frame update
     void Start()
     {
-        debug_text.text = "Debug";
-
+        discus_startPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -26,6 +27,25 @@ public class discus_physic : MonoBehaviour
     {
         check_for_touchEvent();
         cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
+        check_freez();
+        discus_info.text = "Velocity.Y: " + gameObject.GetComponent<Rigidbody2D>().velocity.y.ToString()+'\n';
+        discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString();
+    }
+
+    private void check_freez ()
+    {
+        if (gameObject.GetComponent<Rigidbody2D>().velocity.y == 0)
+        {
+            gameObject.transform.position = discus_startPosition;
+        }
+    }
+
+    private void check_move ()
+    {
+        if (gameObject.GetComponent<Rigidbody2D>().velocity.y !=0)
+        {
+            //...
+        }
     }
 
     private void check_for_touchEvent()
@@ -36,6 +56,7 @@ public class discus_physic : MonoBehaviour
             if (Input.touches[0].phase == TouchPhase.Began)
             {
                 pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                crosshair.GetComponent<SpriteRenderer>().enabled = true;
             }
             else
             {
@@ -44,6 +65,7 @@ public class discus_physic : MonoBehaviour
                     pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                     force = new Vector2(pos_start.x-pos_end.x, pos_start.y-pos_end.y);
                     discus_shoot(force);
+                    crosshair.GetComponent<SpriteRenderer>().enabled = false;
                 } else
                 {
                     if (Input.touches[0].phase == TouchPhase.Moved)
@@ -60,19 +82,18 @@ public class discus_physic : MonoBehaviour
     private void move_crosshair (Vector2 v)
     {
         crosshair.transform.position = get_crosshair_position(v);
-        
     }
 
     private void discus_shoot(Vector2 v)
     {
         crosshair.transform.position = get_crosshair_position(v);
-
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
         int factor = 100;
-        debug_text.text = get_ScalfaktorToForce(v, factor).ToString()+'\n';
-        debug_text.text = debug_text.text + alpha + '\n';
-        debug_text.text = debug_text.text + v;
-        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2 ( get_ScalfaktorToForce(v, factor).x, (alpha*(factor)) ));
+        float power = get_ScalfaktorToForce(v, factor).x;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2 (power, (alpha*(factor/4))));
+
+        debug_text.text = "Angle: " +alpha+ '\n';
+        debug_text.text = debug_text.text + "Power: " + power;
     }
 
     private Vector2 get_crosshair_position (Vector2 v)
@@ -134,7 +155,8 @@ public class discus_physic : MonoBehaviour
             float ScreenHeight = Screen.height;
             float ScreenWidth = Screen.width;
 
-            scale = new Vector2((100/ ScreenWidth * v.x)*(frustumWidth / 100) *factor, (100/ ScreenHeight * v.y)*(frustumHeight/100)*factor);
+            //scale = new Vector2((100/ ScreenWidth * v.x)*(frustumWidth / 100) *factor, (100/ ScreenHeight * v.y)*(frustumHeight/100)*factor);
+            scale = new Vector2((100 / ScreenWidth * v.x) * (frustumWidth / 100) * factor, 0); //Höhe wird von Alpha bestimmt
         } catch (Exception e)
         {
             debug_text.text = e.Message;
@@ -197,7 +219,6 @@ public class discus_physic : MonoBehaviour
                 }
             }
         }
-        
         return alpha;
     }
 

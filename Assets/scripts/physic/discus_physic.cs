@@ -22,6 +22,7 @@ public class discus_physic : MonoBehaviour
     //GamePlay - score
     public static int respawn_index = 0;
     public bool gravity;
+    public GameObject popUp;
 
     //Test
     private GameObject r1, r2, r3, r4;
@@ -46,7 +47,8 @@ public class discus_physic : MonoBehaviour
         check_move();
 
         //Camera Settings
-        cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
+        //cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
+        //Debug Text
         discus_info.text = "Velocity.Y: " + speed_y.ToString() + '\n' + "Velocity.X: " + speed_x.ToString() + '\n';
         discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString()+ '\n' + "Respawn: "+respawn_index;
     }
@@ -66,6 +68,10 @@ public class discus_physic : MonoBehaviour
                 gameObject.GetComponent<Rigidbody2D>().Sleep();
                 respawn_index++;
                 wasMove = false;
+                //hier wurde nicht das richtige Ziel getroffen
+                popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
+                Animator anim = popUp.GetComponent<Animator>();
+                anim.SetBool("isShort", true);
             }
         }
         else
@@ -201,7 +207,14 @@ public class discus_physic : MonoBehaviour
         if (gravity)
         {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 4))));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
+
+            /**
+             * gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
+             * Wichtig hierbei ist, dass factir/2 -> 2 ist der Faktor in Beztug auf die CameraSize
+             * Je kleiner die Kamera desto kleiner der Faktor (hier ist er 2)
+             * **/
+
             //Test
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = null;
@@ -215,9 +228,10 @@ public class discus_physic : MonoBehaviour
         else
         {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 4))));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
             //Test
-            symbol_hit = (PhysicsMaterial2D) AssetDatabase.LoadAssetAtPath("Assets/Materials/symbols_hit.physicsMaterial2D", typeof(PhysicsMaterial2D)) ;
+            //symbol_hit = (PhysicsMaterial2D) AssetDatabase.LoadAssetAtPath("Assets/Materials/symbols_hit.physicsMaterial2D", typeof(PhysicsMaterial2D)) ;
+            symbol_hit = Resources.Load("symbols_hit.physicsMaterial2D") as PhysicsMaterial2D;
 
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
@@ -265,7 +279,6 @@ public class discus_physic : MonoBehaviour
             float ScreenHeight = Screen.height;
             float ScreenWidth = Screen.width;
 
-            //scale = new Vector2((100/ ScreenWidth * v.x)*(frustumWidth / 100) *factor, (100/ ScreenHeight * v.y)*(frustumHeight/100)*factor);
             scale = new Vector2((100 / ScreenWidth * v.x) * (frustumWidth / 100) * factor, 0); //Höhe wird von Alpha bestimmt
         }
         catch (Exception e)

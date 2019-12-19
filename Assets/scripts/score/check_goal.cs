@@ -9,8 +9,10 @@ public class check_goal : MonoBehaviour
 {
     //Scoresystem
     public GameObject[] hit_order = new GameObject[2];//Reihenfolge der Symbole zum Abschuss. Achtung die Tag's müssen gesetzt sein
+    public int chances;
     private int index_goal;// Anzahl der bisherigen Treffer (pro Treffer 1x inkrementieren) Liste wird so weitergeführt
     private bool goal_flag;// Win or Lose flag für den ResultScreen
+
 
     //ScreenNavigation
     static public bool ScreenResult;
@@ -20,7 +22,7 @@ public class check_goal : MonoBehaviour
     void Start()
     {
         index_goal = 0;
-        
+
     }
 
     // Update is called once per frame
@@ -32,8 +34,11 @@ public class check_goal : MonoBehaviour
     public void check_triggerEnter()
     {
         Collider2D collision = discus_collision.discusCollision;
-        if (discus_physic.respawn_index < hit_order.Length*2)
-        {//Diskus hat nicht 3x respant
+        //if (discus_physic.respawn_index < hit_order.Length*2)
+
+        if (discus_physic.respawn_index < chances)
+
+        {//Diskus hat nicht 3x respawnt
             if (index_goal <= hit_order.Length - 1)
             {//der IST-Erreicht-Index ist kleiner als der SOLL-Index, 
                 if (collision.tag == hit_order[index_goal].tag)//Kollision mit dem aktuellen GameObject (bei tag)

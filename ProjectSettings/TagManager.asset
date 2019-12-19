@@ -19,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - background
+  - foreground_far
+  - forground_close
   - 
   - 
   - 

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class discus_physic : MonoBehaviour
 {
     //Displayinformation
-    public Text debug_text, discus_info;
+    //public Text debug_text, discus_info;
     public Camera cam;
     
     //Discus
@@ -20,7 +20,7 @@ public class discus_physic : MonoBehaviour
     private Vector2 pos_start, pos_end, pos_mov, force;
 
     //GamePlay - score
-    public static int respawn_index = 0;
+    public static bool discusfreez = false;
     public bool gravity;
     public GameObject popUp;
 
@@ -34,7 +34,6 @@ public class discus_physic : MonoBehaviour
         //Initialisations
         discus_startPosition = gameObject.transform.position;
         wasMove = false;
-        respawn_index = 0;
     }
 
 
@@ -49,8 +48,8 @@ public class discus_physic : MonoBehaviour
         //Camera Settings
         //cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
         //Debug Text
-        discus_info.text = "Velocity.Y: " + speed_y.ToString() + '\n' + "Velocity.X: " + speed_x.ToString() + '\n';
-        discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString()+ '\n' + "Respawn: "+respawn_index;
+        //discus_info.text = "Velocity.Y: " + speed_y.ToString() + '\n' + "Velocity.X: " + speed_x.ToString() + '\n';
+        //discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString()+ '\n' + "Respawn: "+respawn_index;
     }
 
     //Checks
@@ -66,7 +65,7 @@ public class discus_physic : MonoBehaviour
                 gameObject.transform.position = discus_startPosition;
                 gameObject.transform.rotation = Quaternion.Euler(0,0,0);
                 gameObject.GetComponent<Rigidbody2D>().Sleep();
-                respawn_index++;
+                discusfreez = true;
                 wasMove = false;
                 //hier wurde nicht das richtige Ziel getroffen
                 popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
@@ -81,7 +80,7 @@ public class discus_physic : MonoBehaviour
                 gameObject.transform.position = discus_startPosition;
                 gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
                 gameObject.GetComponent<Rigidbody2D>().Sleep();
-                respawn_index++;
+                discusfreez = true;
                 wasMove = false;
             }
         }
@@ -243,8 +242,8 @@ public class discus_physic : MonoBehaviour
             r4.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
         }
 
-        debug_text.text = "Angle: " + alpha + '\n';
-        debug_text.text = debug_text.text + "Power: " + power;
+        //debug_text.text = "Angle: " + alpha + '\n';
+        //debug_text.text = debug_text.text + "Power: " + power;
     }
 
     //Physic Calculations
@@ -283,7 +282,7 @@ public class discus_physic : MonoBehaviour
         }
         catch (Exception e)
         {
-            debug_text.text = e.Message;
+            //debug_text.text = e.Message;
         }
         return scale;
     }

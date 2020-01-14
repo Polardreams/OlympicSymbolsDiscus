@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class receiveResult : MonoBehaviour
 {
-    public GameObject won;
-    public GameObject loos;
+    public GameObject gold;
+    public GameObject silver;
+    public GameObject bronxe;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (check_goal.ScreenResult)
+        
+        switch (check_goal.medal_index)
         {
-            won.GetComponent<Canvas>().enabled = true;
-        } else
-        {
-            loos.GetComponent<Canvas>().enabled = true;
+            case 0: bronxe.GetComponent<Canvas>().enabled = true; break;
+            case 1: silver.GetComponent<Canvas>().enabled = true; break;
+            case 2: gold.GetComponent<Canvas>().enabled = true; break;
         }
     }
 

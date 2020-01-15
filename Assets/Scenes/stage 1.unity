@@ -518,7 +518,7 @@ PrefabInstance:
     - target: {fileID: 7642213117363962620, guid: 8e803ecfbe0e203409d14f9af239b0e8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7642213117363962620, guid: 8e803ecfbe0e203409d14f9af239b0e8,
         type: 3}
@@ -648,7 +648,7 @@ PrefabInstance:
     - target: {fileID: 8881274026167292086, guid: 2d765032705d57b4d827a752bc5e0b5b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8881274026167292086, guid: 2d765032705d57b4d827a752bc5e0b5b,
         type: 3}
@@ -1029,6 +1029,11 @@ PrefabInstance:
       propertyPath: txt_points
       value: 
       objectReference: {fileID: 864458226}
+    - target: {fileID: 3544229484668174734, guid: 36ab35d6f0cac3f4887c5e9ddb0228c5,
+        type: 3}
+      propertyPath: scene_index
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36ab35d6f0cac3f4887c5e9ddb0228c5, type: 3}
 --- !u!1 &1518510969

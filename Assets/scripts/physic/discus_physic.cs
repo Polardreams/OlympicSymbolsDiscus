@@ -20,7 +20,7 @@ public class discus_physic : MonoBehaviour
     private Vector2 pos_start, pos_end, pos_mov, force;
 
     //GamePlay - score
-    public static bool discusfreez = false;
+    public static bool discusfreez;
     public bool gravity;
     public GameObject popUp;
 
@@ -33,6 +33,7 @@ public class discus_physic : MonoBehaviour
     {
         //Initialisations
         discus_startPosition = gameObject.transform.position;
+        discusfreez = false;
         wasMove = false;
     }
 
@@ -68,9 +69,9 @@ public class discus_physic : MonoBehaviour
                 discusfreez = true;
                 wasMove = false;
                 //hier wurde nicht das richtige Ziel getroffen
-                popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
-                Animator anim = popUp.GetComponent<Animator>();
-                anim.SetBool("isShort", true);
+                //popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
+                //Animator anim = popUp.GetComponent<Animator>();
+                //anim.SetBool("isShort", true);
             }
         }
         else

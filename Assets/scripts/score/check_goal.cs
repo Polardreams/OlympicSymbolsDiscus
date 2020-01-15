@@ -13,6 +13,9 @@ public class check_goal : MonoBehaviour
     private int score, points;
     public GameObject txt_score;
     public GameObject txt_points;
+    public int scene_index;
+    public static int index;
+    
 
 
     //ScreenNavigation
@@ -26,10 +29,10 @@ public class check_goal : MonoBehaviour
     void Start()
     {
         index_goal = 0;
-        score = 0;
+        score = player_score.get_score();
         points = 0;
-
         HUD_Rings = GameObject.Find("HUD");
+        index = scene_index;
     }
 
     // Update is called once per frame
@@ -55,6 +58,7 @@ public class check_goal : MonoBehaviour
                     HUD_ringsRemove(index_goal);
                     if (index_goal == hit_order.Length)//Wenn alle Ziele getroffen sind ist die Stage zuende
                     {
+                    PlayerPrefs.SetInt("score", score);
                     scene_finish(index_goal, "resultScreen");
                     }
                 } else
@@ -70,6 +74,7 @@ public class check_goal : MonoBehaviour
     {
         if (discus_physic.discusfreez)
         {
+            PlayerPrefs.SetInt("score", score);
             scene_finish(index_goal, "resultScreen");
         }
     }
@@ -89,14 +94,14 @@ public class check_goal : MonoBehaviour
 
     private void display_points()
     {
-        txt_points.GetComponent<Text>().text = "Score: "+points.ToString();
+        txt_points.GetComponent<Text>().text = "Points: "+points.ToString();
         //ev. Popup script
         //...
     }
 
     private void display_score ()
     {
-        txt_score.GetComponent<Text>().text = "Points: " + score.ToString();
+        txt_score.GetComponent<Text>().text = "Score: " + score.ToString();
     }
 
     private void HUD_ringsRemove(int i)

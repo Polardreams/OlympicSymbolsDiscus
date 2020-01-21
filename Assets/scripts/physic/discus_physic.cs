@@ -28,6 +28,9 @@ public class discus_physic : MonoBehaviour
     private GameObject r1, r2, r3, r4;
     private PhysicsMaterial2D symbol_hit;
 
+    //Player
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,7 @@ public class discus_physic : MonoBehaviour
         discus_startPosition = gameObject.transform.position;
         discusfreez = false;
         wasMove = false;
+        player = gameObject.transform.parent.gameObject;
     }
 
 
@@ -102,7 +106,6 @@ public class discus_physic : MonoBehaviour
         {
             if (Input.touches.Length == 1)
             {
-
                 if (Input.touches[0].phase == TouchPhase.Began)
                 {
                     pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
@@ -112,6 +115,7 @@ public class discus_physic : MonoBehaviour
                 {
                     if (Input.touches[0].phase == TouchPhase.Ended)
                     {
+                        
                         pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                         force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                         discus_shoot(force);
@@ -134,6 +138,7 @@ public class discus_physic : MonoBehaviour
             {
                 pos_start = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                 crosshair.GetComponent<SpriteRenderer>().enabled = true;
+                player_raisePower();
             }
             else
             {
@@ -143,6 +148,7 @@ public class discus_physic : MonoBehaviour
                     force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                     discus_shoot(force);
                     crosshair.GetComponent<SpriteRenderer>().enabled = false;
+                    player_throw();
                 }
                 else
                 {
@@ -154,11 +160,28 @@ public class discus_physic : MonoBehaviour
                     }
                 }
             }
-
         }
-
-
     }
+
+    private void player_raisePower ()
+    {
+        //RaisePower
+        player.GetComponent<Animator>().SetBool("rise", true);
+        player.GetComponent<Animator>().SetBool("throw", false);
+        gameObject.GetComponent<Animator>().SetBool("raiseDiscus", true);
+    }
+
+    private void player_throw ()
+    {
+        gameObject.GetComponent<Animator>().SetBool("raiseDiscus", false);
+        gameObject.GetComponent<Animator>().enabled = false;
+        gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        //Throw
+        player.GetComponent<Animator>().SetBool("throw", true);
+        player.GetComponent<Animator>().SetBool("rise", false);
+    }
+
+    
 
     //Crosshair Script
     private void move_crosshair(Vector2 v)
@@ -199,11 +222,13 @@ public class discus_physic : MonoBehaviour
     //Discus_physic Physic
     private void discus_shoot(Vector2 v)
     {
+        
+
         crosshair.transform.position = get_crosshair_position(v);
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
         int factor = 100;
         float power = get_ScalfaktorToForce(v, factor).x;
-
+        
         if (gravity)
         {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;

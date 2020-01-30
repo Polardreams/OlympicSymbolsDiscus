@@ -59,12 +59,14 @@ public class script_LevelStart : MonoBehaviour
 
     public void next_level ()
     {
-        SceneManager.LoadScene("stage " + (PlayerPrefs.GetInt("unlockStages")+1).ToString(), LoadSceneMode.Single);
+        //SceneManager.LoadScene("stage " + (PlayerPrefs.GetInt("unlockStages")+1).ToString(), LoadSceneMode.Single);
+        SceneManager.LoadScene("stage " + (check_goal.index+1).ToString(), LoadSceneMode.Single);
     }
 
     public void repeat_level ()
     {
-        SceneManager.LoadScene("stage " + PlayerPrefs.GetInt("unlockStages").ToString(), LoadSceneMode.Single);
+        //SceneManager.LoadScene("stage " + PlayerPrefs.GetInt("unlockStages").ToString(), LoadSceneMode.Single);
+        SceneManager.LoadScene("stage " + (check_goal.index).ToString(), LoadSceneMode.Single);
     }
 
 }

@@ -110,6 +110,7 @@ public class discus_physic : MonoBehaviour
                 {
                     pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                     crosshair.GetComponent<SpriteRenderer>().enabled = true;
+                    player_raisePower();
                 }
                 else
                 {
@@ -120,6 +121,7 @@ public class discus_physic : MonoBehaviour
                         force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                         discus_shoot(force);
                         crosshair.GetComponent<SpriteRenderer>().enabled = false;
+                        player_throw();
                     }
                     else
                     {

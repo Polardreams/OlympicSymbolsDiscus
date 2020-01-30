@@ -442,6 +442,21 @@ PrefabInstance:
       propertyPath: popUp
       value: 
       objectReference: {fileID: 2142593975}
+    - target: {fileID: 707448963587674359, guid: 0c80e5dfb16805743bb6d25716c4fc56,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 707448963587674359, guid: 0c80e5dfb16805743bb6d25716c4fc56,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 707448963587674359, guid: 0c80e5dfb16805743bb6d25716c4fc56,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.04
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c80e5dfb16805743bb6d25716c4fc56, type: 3}
 --- !u!1001 &671052344

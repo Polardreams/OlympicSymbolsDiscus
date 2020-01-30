@@ -1,7 +1,37 @@
 fileFormatVersion: 2
 guid: 250206d352bcf488f836ec32d5b60aea
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5818576485155402059
+    second: RaisePowerAni-01_0
+  - first:
+      213: 1406819986338593407
+    second: RaisePowerAni-01_1
+  - first:
+      213: 6544373872198774597
+    second: RaisePowerAni-01_2
+  - first:
+      213: -1910430585264007818
+    second: RaisePowerAni-01_3
+  - first:
+      213: -7814186587804025867
+    second: RaisePowerAni-01_4
+  - first:
+      213: 1265802281641851993
+    second: RaisePowerAni-01_5
+  - first:
+      213: -1489316862451965918
+    second: RaisePowerAni-01_6
+  - first:
+      213: -5012039571821254888
+    second: RaisePowerAni-01_7
+  - first:
+      213: -4528731230337288268
+    second: RaisePowerAni-01_8
+  - first:
+      213: -5873958690859225281
+    second: RaisePowerAni-01_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +70,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -70,9 +100,279 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: RaisePowerAni-01_0
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 101
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7011c6041e6002044b0d1ef683fd4c78
+      internalID: -5818576485155402059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_1
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 48
+        width: 123
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b765cf523e39fc46b0e2f9dd9a3c105
+      internalID: 1406819986338593407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_2
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 48
+        width: 121
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87aa943f238cd8e49a04c3ecfaa14b12
+      internalID: 6544373872198774597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_3
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 48
+        width: 139
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 426522c7a525e5646b582bb9a501d48e
+      internalID: -1910430585264007818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_4
+      rect:
+        serializedVersion: 2
+        x: 1700
+        y: 48
+        width: 184
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 571c66b6f9494d94f8b0a64f9ed77a4a
+      internalID: -7814186587804025867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_5
+      rect:
+        serializedVersion: 2
+        x: 2081
+        y: 48
+        width: 203
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b24da5bb1e54a45a39b143bff6dd1e
+      internalID: 1265802281641851993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_6
+      rect:
+        serializedVersion: 2
+        x: 2442
+        y: 50
+        width: 225
+        height: 283
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 619ab9e3de667fb42a833f525742d7dc
+      internalID: -1489316862451965918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_7
+      rect:
+        serializedVersion: 2
+        x: 2831
+        y: 48
+        width: 240
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e19a594f193b5e4ca5e0f1a57a2fc7d
+      internalID: -5012039571821254888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_8
+      rect:
+        serializedVersion: 2
+        x: 3233
+        y: 48
+        width: 223
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 335f98877777690429d6f8ab32ed80e1
+      internalID: -4528731230337288268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RaisePowerAni-01_9
+      rect:
+        serializedVersion: 2
+        x: 3632
+        y: 48
+        width: 222
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bb0cbc77a5bd2849aacf069879dea0f
+      internalID: -5873958690859225281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

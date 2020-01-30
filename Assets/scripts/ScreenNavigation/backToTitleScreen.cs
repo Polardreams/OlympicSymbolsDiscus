@@ -7,6 +7,8 @@ public class backToTitleScreen : MonoBehaviour
 {
 public void backToTitle ()
     {
+
+        PlayerPrefs.SetInt("nav_fromStage",1);
         SceneManager.LoadScene("Screens", LoadSceneMode.Single);
     }
 }

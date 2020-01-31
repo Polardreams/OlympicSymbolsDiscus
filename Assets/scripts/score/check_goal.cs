@@ -24,6 +24,9 @@ public class check_goal : MonoBehaviour
     //Display
     private GameObject HUD_Rings;
 
+    public GameObject popup_points;
+    public GameObject popup_TextMessage;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,16 +47,15 @@ public class check_goal : MonoBehaviour
 
     private void check_Collision()
     {
-        Collider2D collision = discus_collision.discusCollision;
-
+        //Collider2D colider = discus_collision.discusColider;
+        Collision2D collision = discus_collision.discusCollision;
         if (index_goal <= hit_order.Length - 1 && collision != null)
         {//der IST-Erreicht-Index ist kleiner als der SOLL-Index, 
-            if (collision.tag == hit_order[index_goal].tag)//Kollision mit dem aktuellen GameObject (bei tag)
+            if (collision.transform.tag == hit_order[index_goal].tag)//Kollision mit dem aktuellen GameObject (bei tag)
             {
                 index_goal++;//nur wenn das aktuelle Symbol getroffen wird, erhöht sich der Index und wählt das neue Ziel aus
                 StartCoroutine(destroySymbol(collision));
                 score = count_score(1);
-                display_points();
                 display_score();
                 HUD_ringsRemove(index_goal);
                 if (index_goal == hit_order.Length)//Wenn alle Ziele getroffen sind ist die Stage zuende
@@ -65,10 +67,16 @@ public class check_goal : MonoBehaviour
             else
             {
                 score = count_score(0);//eventuelle festlegen, dass das Popup (points) nur bei Kontakt mit Ringen ausgelöst wird, nicht z.b. mit einer Wand
-                display_points();
                 display_score();
+                if (collision.transform.tag != "Untagged")
+                {
+                    Debug.Log(collision.transform.tag);
+                    display_textMessage("critical");
+                }
+                
             }
         }
+        discus_collision.discusCollision = null;
     }
 
     private void check_freez()
@@ -80,16 +88,18 @@ public class check_goal : MonoBehaviour
         }
     }
 
-    private IEnumerator destroySymbol(Collider2D collision)
+    private IEnumerator destroySymbol(Collision2D collision)
     {
         yield return new WaitForSeconds(0.1f);
-        collision.GetComponent<Animator>().SetBool("ishit", true);
-
-        ParticleSystem p = collision.GetComponentInChildren<ParticleSystem>();
+        collision.transform.GetComponent<Animator>().SetBool("ishit", true);
+        ParticleSystem p = collision.transform.GetComponentInChildren<ParticleSystem>();
+        Vector2 v = collision.contacts[0].point;
+        p.transform.position = v;
+        display_points(v);
         p.enableEmission = true;
         p.Play();
 
-        collision.GetComponent<Collider2D>().enabled = false;
+        collision.transform.GetComponent<Collider2D>().enabled = false;
     }
 
     private int count_score(int inc)
@@ -98,12 +108,29 @@ public class check_goal : MonoBehaviour
         return score = score + (points * inc);
     }
 
-    private void display_points()
+    private void display_textMessage (string txt)
     {
-        txt_points.GetComponent<Text>().text = "Points: " + points.ToString();
-        //ev. Popup script
-        //...
+        popup_TextMessage.GetComponent<TMPro.TextMeshPro>().text = txt;
+        popup_TextMessage.GetComponent<Animator>().SetBool("pop", true);
+        popup_TextMessage.GetComponent<MeshRenderer>().enabled = true;
     }
+
+    private void display_points(Vector2 v)
+    {
+        popup_points.GetComponent<Animator>().SetBool("pop", true);
+        popup_points.GetComponent<MeshRenderer>().enabled = true;
+        popup_points.transform.position = v;
+        
+        if (points>1)
+        {
+            popup_points.GetComponent<TMPro.TextMeshPro>().text = points.ToString() + " Points";
+        } else
+        {
+            popup_points.GetComponent<TMPro.TextMeshPro>().text = points.ToString() + " Point";
+        }
+    }
+
+
 
     private void display_score()
     {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class discus_collision : MonoBehaviour
 {
-    public static Collider2D discusCollision;
-    public AudioSource hit1, hit2, hit3, hit4, hit5, bounce;
+    public static Collision2D discusCollision;
+    public AudioSource hit1, hit2, hit3, hit4, hit5, bounce, aim;
     
 
     // Start is called before the first frame update
@@ -20,7 +20,12 @@ public class discus_collision : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void play_raisePower_Sound ()
+    {
+        aim.PlayOneShot(aim.clip);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         discusCollision = collision;
 
@@ -30,7 +35,7 @@ public class discus_collision : MonoBehaviour
          * kann einer bestimmten AudioSource zugeordnet werden
          */
 
-        switch (collision.tag)
+        switch (collision.transform.tag)
         {
             case "ground": bounce.PlayOneShot(bounce.clip); break;
             case "green": hit1.PlayOneShot(hit1.clip); break;
@@ -39,7 +44,6 @@ public class discus_collision : MonoBehaviour
             case "black": hit4.PlayOneShot(hit4.clip); break;
             case "red": hit5.PlayOneShot(hit5.clip); break;
         }
-        
     }
 
 }

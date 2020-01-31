@@ -22,7 +22,6 @@ public class discus_physic : MonoBehaviour
     //GamePlay - score
     public static bool discusfreez;
     public bool gravity;
-    public GameObject popUp;
 
     //Test
     private GameObject r1, r2, r3, r4;

@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 3732026805524447050}
   - component: {fileID: 3618124709805021256}
   - component: {fileID: 2758013717984414447}
+  - component: {fileID: 1911766142371820193}
   - component: {fileID: 3406195722904017198}
   m_Layer: 0
   m_Name: Discus
@@ -381,7 +382,6 @@ MonoBehaviour:
   max_crosshair_radius: 8
   gravity: 1
   popUp: {fileID: 0}
-  player: {fileID: 0}
 --- !u!114 &3732026805524447050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +394,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb02614fd92594d4285ed86f854b4610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit: {fileID: 6729121655887374945}
+  hit1: {fileID: 0}
+  hit2: {fileID: 0}
+  hit3: {fileID: 0}
+  hit4: {fileID: 0}
+  hit5: {fileID: 0}
   bounce: {fileID: 7925120838567588343}
 --- !u!58 &3618124709805021256
 CircleCollider2D:
@@ -422,6 +426,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5819b3be9529b8c4798b35288273f9b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1911766142371820193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065948269851201919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3370aef3d2acf42eeb2a9c91c02c95da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!58 &3406195722904017198

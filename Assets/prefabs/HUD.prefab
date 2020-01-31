@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 303.8, y: -274}
+  m_AnchoredPosition: {x: 187, y: -274}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5308437561893167562
@@ -893,7 +893,7 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: 097cdc78e8e361d4285e8b80278257a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 378.5
+      value: 278
       objectReference: {fileID: 0}
     - target: {fileID: 3845752761882068785, guid: 097cdc78e8e361d4285e8b80278257a4,
         type: 3}
@@ -988,7 +988,7 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: b0cbbbc36bf56d8498f47fce8fa11cef,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 504.2
+      value: 405
       objectReference: {fileID: 0}
     - target: {fileID: 3845752761882068785, guid: b0cbbbc36bf56d8498f47fce8fa11cef,
         type: 3}
@@ -1083,7 +1083,7 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: 21b5187a538d20446bc351d77cdbb6b0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 546.3
+      value: 447
       objectReference: {fileID: 0}
     - target: {fileID: 3845752761882068785, guid: 21b5187a538d20446bc351d77cdbb6b0,
         type: 3}
@@ -1178,7 +1178,7 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: 6c5a9896a32caca488fd63a1c2a676b6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 462.8
+      value: 364
       objectReference: {fileID: 0}
     - target: {fileID: 3845752761882068785, guid: 6c5a9896a32caca488fd63a1c2a676b6,
         type: 3}
@@ -1273,7 +1273,7 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: fe7a7c8e77a14e9488bc6363ea5bc393,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 420
+      value: 322
       objectReference: {fileID: 0}
     - target: {fileID: 3845752761882068785, guid: fe7a7c8e77a14e9488bc6363ea5bc393,
         type: 3}

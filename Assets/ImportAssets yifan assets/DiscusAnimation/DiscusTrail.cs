@@ -13,12 +13,15 @@ public class DiscusTrail : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		transform.position = Pos;
+        
+        Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        transform.position = Pos;
         Pos.z = 0;
         if (Input.GetMouseButton(0))
         {
             transform.position = Pos;
         }
+    
     }
 }

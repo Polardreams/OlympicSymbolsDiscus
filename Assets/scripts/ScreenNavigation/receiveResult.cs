@@ -33,13 +33,21 @@ public class receiveResult : MonoBehaviour
     private void save_medal(int medalIndex)
     {
         try {
-            if (check_goal.index>0) {
+            if (check_goal.index>=0) {
                 string stageName = "stage" + check_goal.index;
                 int tmp_medalIndex = PlayerPrefs.GetInt(stageName);
                 if (medalIndex >= tmp_medalIndex)
                 {
-                    PlayerPrefs.SetInt(stageName, medalIndex);
+                    PlayerPrefs.SetInt(stageName, medalIndex+1);
+                } else
+                {
+                    
+                    if (medalIndex == 0 && tmp_medalIndex==0)
+                    {
+                        PlayerPrefs.SetInt(stageName, medalIndex+1);
+                    }
                 }
+
             }
         } catch (Exception e)
         {

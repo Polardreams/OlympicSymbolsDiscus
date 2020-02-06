@@ -9,13 +9,12 @@ public class check_goal : MonoBehaviour
 {
     //Scoresystem
     public GameObject[] hit_order = new GameObject[2];//Reihenfolge der Symbole zum Abschuss. Achtung die Tag's müssen gesetzt sein
+    public GameObject txt_score;
+    public int scene_index;
+
+    public static int index;
     private int index_goal;// Anzahl der bisherigen Treffer (pro Treffer 1x inkrementieren) Liste wird so weitergeführt
     private int score, points;
-    public GameObject txt_score;
-    public GameObject txt_points;
-    public int scene_index;
-    public static int index;
-
 
 
     //ScreenNavigation

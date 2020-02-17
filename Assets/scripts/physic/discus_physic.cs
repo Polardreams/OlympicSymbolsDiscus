@@ -229,8 +229,9 @@ public class discus_physic : MonoBehaviour
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
         int factor = 100;
         float power = get_ScalfaktorToForce(v, factor).x;
+
         
-        if (gravity)
+        if (true)//if (gravity)
         {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
@@ -242,6 +243,7 @@ public class discus_physic : MonoBehaviour
              * **/
 
             //Test
+            /*
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = null;
             r2 = GameObject.Find("Skywalls");
@@ -250,6 +252,7 @@ public class discus_physic : MonoBehaviour
             r3.GetComponent<Collider2D>().sharedMaterial = null;
             r4 = GameObject.Find("LeftWall");
             r4.GetComponent<Collider2D>().sharedMaterial = null;
+            */
         }
         else
         {
@@ -258,7 +261,7 @@ public class discus_physic : MonoBehaviour
             //Test
             //symbol_hit = (PhysicsMaterial2D) AssetDatabase.LoadAssetAtPath("Assets/Materials/symbols_hit.physicsMaterial2D", typeof(PhysicsMaterial2D)) ;
             symbol_hit = Resources.Load("symbols_hit.physicsMaterial2D") as PhysicsMaterial2D;
-
+            
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
             r2 = GameObject.Find("Skywalls");

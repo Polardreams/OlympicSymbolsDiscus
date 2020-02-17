@@ -837,7 +837,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8881274026167292088
 MonoBehaviour:
@@ -965,6 +965,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8632542088035794385, guid: 097cdc78e8e361d4285e8b80278257a4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 097cdc78e8e361d4285e8b80278257a4, type: 3}
 --- !u!4 &4323350578321338984 stripped
@@ -1053,6 +1058,11 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: b0cbbbc36bf56d8498f47fce8fa11cef,
         type: 3}
       propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632542088035794385, guid: b0cbbbc36bf56d8498f47fce8fa11cef,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8806826350326267230, guid: b0cbbbc36bf56d8498f47fce8fa11cef,
@@ -1148,6 +1158,11 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: 21b5187a538d20446bc351d77cdbb6b0,
         type: 3}
       propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632542088035794385, guid: 21b5187a538d20446bc351d77cdbb6b0,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8806826350326267230, guid: 21b5187a538d20446bc351d77cdbb6b0,
@@ -1250,6 +1265,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8632542088035794385, guid: 6c5a9896a32caca488fd63a1c2a676b6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c5a9896a32caca488fd63a1c2a676b6, type: 3}
 --- !u!4 &7613196270033515198 stripped
@@ -1338,6 +1358,11 @@ PrefabInstance:
     - target: {fileID: 3845752761882068785, guid: fe7a7c8e77a14e9488bc6363ea5bc393,
         type: 3}
       propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632542088035794385, guid: fe7a7c8e77a14e9488bc6363ea5bc393,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8806826350326267230, guid: fe7a7c8e77a14e9488bc6363ea5bc393,

@@ -9,7 +9,7 @@ TagManager:
   - green
   - red
   - black
-  - ground
+  - wall
   layers:
   - Default
   - TransparentFX

@@ -37,7 +37,7 @@ public class discus_collision : MonoBehaviour
 
         switch (collision.transform.tag)
         {
-            case "ground": bounce.PlayOneShot(bounce.clip); break;
+            case "wall": bounce.PlayOneShot(bounce.clip); break;
             case "green": hit1.PlayOneShot(hit1.clip); break;
             case "blue": hit2.PlayOneShot(hit2.clip); break;
             case "yellow": hit3.PlayOneShot(hit3.clip); break;

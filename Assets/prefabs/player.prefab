@@ -1000,7 +1000,7 @@ PrefabInstance:
     - target: {fileID: 9065948269851201919, guid: 25fe15e19354fed4baed4e82006833bb,
         type: 3}
       propertyPath: m_Name
-      value: Discus
+      value: Discus0
       objectReference: {fileID: 0}
     - target: {fileID: 9065948269851201906, guid: 25fe15e19354fed4baed4e82006833bb,
         type: 3}
@@ -1080,6 +1080,16 @@ PrefabInstance:
     - target: {fileID: 6878720936953585737, guid: 25fe15e19354fed4baed4e82006833bb,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406195722904017198, guid: 25fe15e19354fed4baed4e82006833bb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618124709805021256, guid: 25fe15e19354fed4baed4e82006833bb,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3732026805524447050, guid: 25fe15e19354fed4baed4e82006833bb,

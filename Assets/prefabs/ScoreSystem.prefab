@@ -46,3 +46,8 @@ MonoBehaviour:
   hit_order:
   - {fileID: 0}
   - {fileID: 0}
+  txt_score: {fileID: 0}
+  scene_index: 0
+  bouncing: 3
+  popup_points: {fileID: 0}
+  popup_TextMessage: {fileID: 0}

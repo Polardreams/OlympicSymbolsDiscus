@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class discus_physic : MonoBehaviour
 {
     //Displayinformation
-    public Text debug_text, discus_info;
+    //public Text debug_text, discus_info;
     public Camera cam;
     
     //Discus
@@ -20,21 +20,24 @@ public class discus_physic : MonoBehaviour
     private Vector2 pos_start, pos_end, pos_mov, force;
 
     //GamePlay - score
-    public static int respawn_index = 0;
+    public static bool discusfreez;
     public bool gravity;
-    public GameObject popUp;
 
     //Test
     private GameObject r1, r2, r3, r4;
     private PhysicsMaterial2D symbol_hit;
+
+    //Player
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         //Initialisations
         discus_startPosition = gameObject.transform.position;
+        discusfreez = false;
         wasMove = false;
-        respawn_index = 0;
+        player = gameObject.transform.parent.gameObject;
     }
 
 
@@ -49,8 +52,8 @@ public class discus_physic : MonoBehaviour
         //Camera Settings
         //cam.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -13);
         //Debug Text
-        discus_info.text = "Velocity.Y: " + speed_y.ToString() + '\n' + "Velocity.X: " + speed_x.ToString() + '\n';
-        discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString()+ '\n' + "Respawn: "+respawn_index;
+        //discus_info.text = "Velocity.Y: " + speed_y.ToString() + '\n' + "Velocity.X: " + speed_x.ToString() + '\n';
+        //discus_info.text = discus_info.text + "Position: " + gameObject.transform.position.ToString()+ '\n' + "Respawn: "+respawn_index;
     }
 
     //Checks
@@ -66,12 +69,12 @@ public class discus_physic : MonoBehaviour
                 gameObject.transform.position = discus_startPosition;
                 gameObject.transform.rotation = Quaternion.Euler(0,0,0);
                 gameObject.GetComponent<Rigidbody2D>().Sleep();
-                respawn_index++;
+                discusfreez = true;
                 wasMove = false;
                 //hier wurde nicht das richtige Ziel getroffen
-                popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
-                Animator anim = popUp.GetComponent<Animator>();
-                anim.SetBool("isShort", true);
+                //popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
+                //Animator anim = popUp.GetComponent<Animator>();
+                //anim.SetBool("isShort", true);
             }
         }
         else
@@ -81,7 +84,7 @@ public class discus_physic : MonoBehaviour
                 gameObject.transform.position = discus_startPosition;
                 gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
                 gameObject.GetComponent<Rigidbody2D>().Sleep();
-                respawn_index++;
+                discusfreez = true;
                 wasMove = false;
             }
         }
@@ -102,20 +105,22 @@ public class discus_physic : MonoBehaviour
         {
             if (Input.touches.Length == 1)
             {
-
                 if (Input.touches[0].phase == TouchPhase.Began)
                 {
                     pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                     crosshair.GetComponent<SpriteRenderer>().enabled = true;
+                    player_raisePower();
                 }
                 else
                 {
                     if (Input.touches[0].phase == TouchPhase.Ended)
                     {
+                        
                         pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
                         force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                         discus_shoot(force);
                         crosshair.GetComponent<SpriteRenderer>().enabled = false;
+                        player_throw();
                     }
                     else
                     {
@@ -134,6 +139,7 @@ public class discus_physic : MonoBehaviour
             {
                 pos_start = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                 crosshair.GetComponent<SpriteRenderer>().enabled = true;
+                player_raisePower();
             }
             else
             {
@@ -143,6 +149,7 @@ public class discus_physic : MonoBehaviour
                     force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                     discus_shoot(force);
                     crosshair.GetComponent<SpriteRenderer>().enabled = false;
+                    player_throw();
                 }
                 else
                 {
@@ -154,11 +161,28 @@ public class discus_physic : MonoBehaviour
                     }
                 }
             }
-
         }
-
-
     }
+
+    private void player_raisePower ()
+    {
+        //RaisePower
+        player.GetComponent<Animator>().SetBool("rise", true);
+        player.GetComponent<Animator>().SetBool("throw", false);
+        gameObject.GetComponent<Animator>().SetBool("raiseDiscus", true);
+    }
+
+    private void player_throw ()
+    {
+        gameObject.GetComponent<Animator>().SetBool("raiseDiscus", false);
+        gameObject.GetComponent<Animator>().enabled = false;
+        gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        //Throw
+        player.GetComponent<Animator>().SetBool("throw", true);
+        player.GetComponent<Animator>().SetBool("rise", false);
+    }
+
+    
 
     //Crosshair Script
     private void move_crosshair(Vector2 v)
@@ -199,12 +223,15 @@ public class discus_physic : MonoBehaviour
     //Discus_physic Physic
     private void discus_shoot(Vector2 v)
     {
+        
+
         crosshair.transform.position = get_crosshair_position(v);
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
         int factor = 100;
         float power = get_ScalfaktorToForce(v, factor).x;
 
-        if (gravity)
+        
+        if (true)//if (gravity)
         {
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
@@ -216,6 +243,7 @@ public class discus_physic : MonoBehaviour
              * **/
 
             //Test
+            /*
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = null;
             r2 = GameObject.Find("Skywalls");
@@ -224,6 +252,7 @@ public class discus_physic : MonoBehaviour
             r3.GetComponent<Collider2D>().sharedMaterial = null;
             r4 = GameObject.Find("LeftWall");
             r4.GetComponent<Collider2D>().sharedMaterial = null;
+            */
         }
         else
         {
@@ -232,7 +261,7 @@ public class discus_physic : MonoBehaviour
             //Test
             //symbol_hit = (PhysicsMaterial2D) AssetDatabase.LoadAssetAtPath("Assets/Materials/symbols_hit.physicsMaterial2D", typeof(PhysicsMaterial2D)) ;
             symbol_hit = Resources.Load("symbols_hit.physicsMaterial2D") as PhysicsMaterial2D;
-
+            
             r1 = GameObject.Find("Ground");
             r1.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
             r2 = GameObject.Find("Skywalls");
@@ -243,8 +272,8 @@ public class discus_physic : MonoBehaviour
             r4.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
         }
 
-        debug_text.text = "Angle: " + alpha + '\n';
-        debug_text.text = debug_text.text + "Power: " + power;
+        //debug_text.text = "Angle: " + alpha + '\n';
+        //debug_text.text = debug_text.text + "Power: " + power;
     }
 
     //Physic Calculations
@@ -283,7 +312,7 @@ public class discus_physic : MonoBehaviour
         }
         catch (Exception e)
         {
-            debug_text.text = e.Message;
+            //debug_text.text = e.Message;
         }
         return scale;
     }

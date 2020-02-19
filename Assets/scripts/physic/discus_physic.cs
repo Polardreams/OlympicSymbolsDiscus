@@ -199,6 +199,7 @@ public class discus_physic : MonoBehaviour
         //Throw
         player.GetComponent<Animator>().SetBool("throw", true);
         player.GetComponent<Animator>().SetBool("rise", false);
+
     }
 
     
@@ -242,7 +243,12 @@ public class discus_physic : MonoBehaviour
     //Discus_physic Physic
     private void discus_shoot(Vector2 v)
     {
-        
+        //if (check_goal.firstShot==false)
+        if (true)
+        {
+            check_goal.discus_anz--;
+            check_goal.firstShot = true;
+        }
 
         crosshair.transform.position = get_crosshair_position(v);
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad

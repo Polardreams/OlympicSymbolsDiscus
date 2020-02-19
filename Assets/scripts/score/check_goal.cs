@@ -20,6 +20,7 @@ public class check_goal : MonoBehaviour
     private Vector2 startPos;
     private List<GameObject> instant = new List<GameObject>();
     public int bouncing;
+    public static bool firstShot;
 
 
     //ScreenNavigation
@@ -36,7 +37,7 @@ public class check_goal : MonoBehaviour
     void Start()
     {
         index_goal = 0;
-        discus_anz = 0;
+        discus_anz = 1;
         startPos = discus_physic.discus_startPosition;
         critical_bounce.Add(0, 0);
         critical_bounce.Add(1, 0);
@@ -48,6 +49,7 @@ public class check_goal : MonoBehaviour
         points = 0;
         HUD_Rings = GameObject.Find("HUD");
         index = scene_index;
+        firstShot = false;
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class check_goal : MonoBehaviour
         check_Collision();
         check_spanwDiscus();
         check_freez();
+        display_score();
         if (GameObject.Find("player").transform.childCount == 0)
         {
             PlayerPrefs.SetInt("score", score);
@@ -68,11 +71,11 @@ public class check_goal : MonoBehaviour
         if (discus_anz>0)
         {
             
-            GameObject g = GameObject.Find("player").transform.GetChild(GameObject.Find("player").transform.GetChildCount()-1).gameObject;
+            GameObject g = GameObject.Find("player").transform.GetChild(GameObject.Find("player").transform.childCount-1).gameObject;
             if (g.GetComponent<discus_physic>().throwStop==true)
             {
                 int id = int.Parse(g.name.Replace("Discus", ""));
-                discus_anz--;
+                //discus_anz--;
                 iniDiscus(g, id);
             }
         }
@@ -90,7 +93,6 @@ public class check_goal : MonoBehaviour
                 discus_anz++;
                 StartCoroutine(destroySymbol(collision));
                 score = count_score(1);
-                display_score();
                 HUD_ringsRemove(index_goal);
                 if (index_goal == hit_order.Length)//Wenn alle Ziele getroffen sind ist die Stage zuende
                 {

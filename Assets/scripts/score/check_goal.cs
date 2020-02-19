@@ -75,7 +75,6 @@ public class check_goal : MonoBehaviour
             if (g.GetComponent<discus_physic>().throwStop==true)
             {
                 int id = int.Parse(g.name.Replace("Discus", ""));
-                //discus_anz--;
                 iniDiscus(g, id);
             }
         }
@@ -156,10 +155,17 @@ public class check_goal : MonoBehaviour
 
     private void instantdestroy()
     {
-        foreach (GameObject g in instant)
+        try
         {
-            instant.Remove(g);
-            GameObject.Destroy(g);
+            foreach (GameObject g in instant)
+            {
+                GameObject.Destroy(g);
+            }
+            instant = null;
+            instant = new List<GameObject>();
+        } catch (Exception e)
+        {
+            Debug.Log(e.Message);
         }
     }
 

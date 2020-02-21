@@ -10,6 +10,9 @@ TagManager:
   - red
   - black
   - wall
+  - ground
+  - wall_top
+  - wall_down
   layers:
   - Default
   - TransparentFX

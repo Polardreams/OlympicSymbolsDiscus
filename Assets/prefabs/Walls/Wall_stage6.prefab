@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 606762707541012946}
   m_Layer: 0
   m_Name: stage6_4
-  m_TagString: Untagged
+  m_TagString: wall_down
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 2404828340800414659}
   m_Layer: 0
   m_Name: stage6_3
-  m_TagString: Untagged
+  m_TagString: wall_down
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 8938488688899602995}
   m_Layer: 0
   m_Name: stage6_1
-  m_TagString: Untagged
+  m_TagString: wall_top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 1137804811739706078}
   m_Layer: 0
   m_Name: stage6_2
-  m_TagString: Untagged
+  m_TagString: wall_top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

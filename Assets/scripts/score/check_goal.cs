@@ -11,10 +11,17 @@ public class check_goal : MonoBehaviour
     public GameObject[] hit_order = new GameObject[2];//Reihenfolge der Symbole zum Abschuss. Achtung die Tag's müssen gesetzt sein
     public GameObject txt_score;
     public int scene_index;
+    private string nxt_stage;
 
     public static int index;
     private int index_goal;// Anzahl der bisherigen Treffer (pro Treffer 1x inkrementieren) Liste wird so weitergeführt
     private int score, points;
+    private Dictionary<int, int> critical_bounce = new Dictionary<int, int>();
+    public static int discus_anz;
+    private Vector2 startPos;
+    private List<GameObject> instant = new List<GameObject>();
+    public int bouncing;
+    public static bool firstShot;
 
 
     //ScreenNavigation
@@ -31,17 +38,48 @@ public class check_goal : MonoBehaviour
     void Start()
     {
         index_goal = 0;
+        discus_anz = 1;
+        startPos = discus_physic.discus_startPosition;
+        critical_bounce.Add(0, 0);
+        critical_bounce.Add(1, 0);
+        critical_bounce.Add(2, 0);
+        critical_bounce.Add(3, 0);
+        critical_bounce.Add(4, 0);
+
         score = player_score.get_score();
         points = 0;
         HUD_Rings = GameObject.Find("HUD");
         index = scene_index;
+        firstShot = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         check_Collision();
+        check_spanwDiscus();
         check_freez();
+        display_score();
+        if (GameObject.Find("player").transform.childCount == 0)
+        {
+            PlayerPrefs.SetInt("score", score);
+            nxt_stage ="resultScreen";
+            scene_finish(index_goal);
+        }
+    }
+
+    private void check_spanwDiscus()
+    {
+        if (discus_anz>0)
+        {
+            
+            GameObject g = GameObject.Find("player").transform.GetChild(GameObject.Find("player").transform.childCount-1).gameObject;
+            if (g.GetComponent<discus_physic>().throwStop==true)
+            {
+                int id = int.Parse(g.name.Replace("Discus", ""));
+                iniDiscus(g, id);
+            }
+        }
     }
 
     private void check_Collision()
@@ -53,38 +91,101 @@ public class check_goal : MonoBehaviour
             if (collision.transform.tag == hit_order[index_goal].tag)//Kollision mit dem aktuellen GameObject (bei tag)
             {
                 index_goal++;//nur wenn das aktuelle Symbol getroffen wird, erhöht sich der Index und wählt das neue Ziel aus
+                discus_anz++;
+                discus_collision.play_next_disc();
                 StartCoroutine(destroySymbol(collision));
                 score = count_score(1);
-                display_score();
                 HUD_ringsRemove(index_goal);
                 if (index_goal == hit_order.Length)//Wenn alle Ziele getroffen sind ist die Stage zuende
                 {
                     PlayerPrefs.SetInt("score", score);
-                    scene_finish(index_goal, "resultScreen");
+                    nxt_stage = "resultScreen";
+                    scene_finish(index_goal);
                 }
             }
             else
             {
                 score = count_score(0);//eventuelle festlegen, dass das Popup (points) nur bei Kontakt mit Ringen ausgelöst wird, nicht z.b. mit einer Wand
                 display_score();
-                if (collision.transform.tag != "Untagged")
+                if (collision.transform.tag == "wall_top" || collision.transform.tag == "wall_down")
                 {
-                    Debug.Log(collision.transform.tag);
-                    display_textMessage("critical");
+                    int id = int.Parse(collision.otherCollider.name.Replace("Discus", ""));
+                    switch (id)
+                    {
+                        case 0: critical_bounce[0]++; if (critical_bounce[0]>=0) { display_textMessage("critical" + critical_bounce[0].ToString()); }; break;
+                        case 1: critical_bounce[1]++; if (critical_bounce[1]>=0) { display_textMessage("critical" + critical_bounce[1].ToString()); }; break;
+                        case 2: critical_bounce[2]++; if (critical_bounce[2]>=0) { display_textMessage("critical" + critical_bounce[2].ToString()); }; break;
+                        case 3: critical_bounce[3]++; if (critical_bounce[3]>=0) { display_textMessage("critical" + critical_bounce[3].ToString()); }; break;
+                        case 4: critical_bounce[4]++; if (critical_bounce[4]>=0) { display_textMessage("critical" + critical_bounce[4].ToString()); }; break;
+                    }
+                    for (int n = 0; n < 5; n++)
+                    {
+                        if (critical_bounce[n] >= bouncing)
+                        {
+                            critical_bounce[n] = -1000;//hätte ihn auch löschen können
+                            destroyDiscus(GameObject.Find(collision.otherCollider.name.ToString()), id);
+                        }
+                    }
                 }
-                
             }
         }
         discus_collision.discusCollision = null;
     }
 
-    private void check_freez()
+    private void destroyDiscus(GameObject g, int id)
     {
-        if (discus_physic.discusfreez)
+        g.GetComponent<Animator>().enabled = false;
+        g.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        g.GetComponent<discus_physic>().enabled = false;
+        g.GetComponent<discus_collision>().enabled = false;
+        g.GetComponent<player_score>().enabled = false;
+        instant.Add(g);
+        Invoke("instantdestroy", 4.0f);
+    }
+
+
+    private void iniDiscus (GameObject g, int id)
+    {
+            GameObject newDiscus = Instantiate(g, startPos, Quaternion.identity);
+            newDiscus.transform.SetParent(GameObject.Find("player").transform);
+            newDiscus.name = "Discus" + (id + 1).ToString();
+            newDiscus.transform.localScale = new Vector2(1, 1);
+        newDiscus.GetComponent<Rigidbody2D>().simulated = false;
+            foreach (CircleCollider2D c in newDiscus.transform.GetComponents(typeof(CircleCollider2D)))
+            {
+                c.enabled = false;
+            }
+    }
+
+    private void instantdestroy()
+    {
+        try
         {
-            PlayerPrefs.SetInt("score", score);
-            scene_finish(index_goal, "resultScreen");
+            foreach (GameObject g in instant)
+            {
+                GameObject.Destroy(g);
+            }
+            instant = null;
+            instant = new List<GameObject>();
+        } catch (Exception e)
+        {
+            Debug.Log(e.Message);
         }
+    }
+
+    private void check_freez ()
+    {
+        bool freezFlag = false;
+        GameObject g = GameObject.Find("player");
+        for (int n=0; n < g.transform.childCount;n++)
+        {
+            if (g.transform.GetChild(n).GetComponent<discus_physic>().discusfreez)
+            {
+                int id = int.Parse(g.transform.GetChild(n).name.Replace("Discus", ""));
+                destroyDiscus(g.transform.GetChild(n).gameObject,id);
+            }
+        }
+
     }
 
     private IEnumerator destroySymbol(Collision2D collision)
@@ -93,7 +194,7 @@ public class check_goal : MonoBehaviour
         collision.transform.GetComponent<Animator>().SetBool("ishit", true);
         ParticleSystem p = collision.transform.GetComponentInChildren<ParticleSystem>();
         Vector2 v = collision.contacts[0].point;
-        p.transform.position = v;
+        //p.transform.position = v;
         display_points(v);
         p.enableEmission = true;
         p.Play();
@@ -133,7 +234,7 @@ public class check_goal : MonoBehaviour
 
     private void display_score()
     {
-        txt_score.GetComponent<Text>().text = "Score: " + score.ToString();
+        txt_score.GetComponent<Text>().text = "Score: " + score.ToString()+'\n'+"Number of Discus: "+discus_anz.ToString();
     }
 
     private void HUD_ringsRemove(int i)
@@ -149,7 +250,7 @@ public class check_goal : MonoBehaviour
         }
     }
 
-    private void scene_finish(int hits, string nxt_stage)
+    private void scene_finish(int hits)
     {
         switch (hits)
         {
@@ -161,6 +262,11 @@ public class check_goal : MonoBehaviour
             case 1: medal_index = 0; break;
             case 0: medal_index = 0; break;
         }
+        Invoke("switch_Scene", 2.5f);
+    }
+
+    private void switch_Scene()
+    {
         SceneManager.LoadScene(nxt_stage, LoadSceneMode.Single);
     }
 }

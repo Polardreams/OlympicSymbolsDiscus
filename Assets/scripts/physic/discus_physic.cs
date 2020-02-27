@@ -14,18 +14,21 @@ public class discus_physic : MonoBehaviour
     //Discus
     public GameObject crosshair;
     public int max_crosshair_radius;
-    private Vector2 discus_startPosition;
+    public static Vector2 discus_startPosition;
     private double speed_x, speed_y;
     private bool wasMove;
-    private Vector2 pos_start, pos_end, pos_mov, force;
+    private Vector2 pos_end, pos_mov, force;
+    private Vector2 pos_start;
+    public Vector2 startpositionDiscus;
+    public bool throwStop;
 
     //GamePlay - score
-    public static bool discusfreez;
-    public bool gravity;
+    public bool discusfreez;
+    //public bool gravity;
 
     //Test
-    private GameObject r1, r2, r3, r4;
-    private PhysicsMaterial2D symbol_hit;
+    //private GameObject r1, r2, r3, r4;
+    //private PhysicsMaterial2D symbol_hit;
 
     //Player
     private GameObject player;
@@ -37,7 +40,11 @@ public class discus_physic : MonoBehaviour
         discus_startPosition = gameObject.transform.position;
         discusfreez = false;
         wasMove = false;
+        throwStop = false;
         player = gameObject.transform.parent.gameObject;
+        gameObject.GetComponent<Animator>().enabled = true;
+        crosshair.GetComponent<SpriteRenderer>().enabled = true;
+        pos_start = new Vector2(0,0);
     }
 
 
@@ -62,15 +69,17 @@ public class discus_physic : MonoBehaviour
         speed_x = Math.Round(gameObject.GetComponent<Rigidbody2D>().velocity.x, 0);//ein Discus rollt nicht weit
         speed_y = Math.Round(gameObject.GetComponent<Rigidbody2D>().velocity.y, 2);//aber er kann fliegen
 
-        if (gravity)
+        //if (gravity)
+        if (true)
         {
             if (speed_y == 0 && speed_x == 0 && wasMove == true)
             {
-                gameObject.transform.position = discus_startPosition;
-                gameObject.transform.rotation = Quaternion.Euler(0,0,0);
-                gameObject.GetComponent<Rigidbody2D>().Sleep();
+                //gameObject.transform.position = discus_startPosition;
+                //gameObject.transform.rotation = Quaternion.Euler(0,0,0);
+                //gameObject.GetComponent<Rigidbody2D>().Sleep();
+                //gameObject.GetComponent<Rigidbody2D>().simulated = false;
                 discusfreez = true;
-                wasMove = false;
+                //wasMove = false;
                 //hier wurde nicht das richtige Ziel getroffen
                 //popUp.GetComponent<Image>().sprite = GameObject.Find("pop_message1").GetComponent<SpriteRenderer>().sprite;
                 //Animator anim = popUp.GetComponent<Animator>();
@@ -101,63 +110,69 @@ public class discus_physic : MonoBehaviour
 
     private void check_for_touchEvent()
     {
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        if (throwStop == false)
         {
-            if (Input.touches.Length == 1)
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                if (Input.touches[0].phase == TouchPhase.Began)
+                if (Input.touches.Length == 1)
                 {
-                    pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                    if (Input.touches[0].phase == TouchPhase.Began)
+                    {
+                        pos_start = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                        crosshair.GetComponent<SpriteRenderer>().enabled = true;
+                        player_raisePower();
+                    }
+                    else
+                    {
+                        if (Input.touches[0].phase == TouchPhase.Ended)
+                        {
+
+                            pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                            force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
+                            discus_shoot(force);
+                            crosshair.GetComponent<SpriteRenderer>().enabled = false;
+                            player_throw();
+                            throwStop = true;
+                        }
+                        else
+                        {
+                            if (Input.touches[0].phase == TouchPhase.Moved)
+                            {
+                                pos_mov = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                                force = new Vector2(pos_start.x - pos_mov.x, pos_start.y - pos_mov.y);
+                                move_crosshair(force);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    pos_start = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                     crosshair.GetComponent<SpriteRenderer>().enabled = true;
                     player_raisePower();
                 }
                 else
                 {
-                    if (Input.touches[0].phase == TouchPhase.Ended)
+                    if (Input.GetMouseButtonUp(0))
                     {
-                        
-                        pos_end = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                        pos_end = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                         force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
                         discus_shoot(force);
                         crosshair.GetComponent<SpriteRenderer>().enabled = false;
                         player_throw();
+                        throwStop = true;
                     }
                     else
                     {
-                        if (Input.touches[0].phase == TouchPhase.Moved)
+                        if (Input.GetMouseButton(0))
                         {
-                            pos_mov = new Vector2(Input.touches[0].position.x, Input.touches[0].position.y);
+                            pos_mov = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                             force = new Vector2(pos_start.x - pos_mov.x, pos_start.y - pos_mov.y);
                             move_crosshair(force);
                         }
-                    }
-                }
-            }
-        } else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                pos_start = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                crosshair.GetComponent<SpriteRenderer>().enabled = true;
-                player_raisePower();
-            }
-            else
-            {
-                if (Input.GetMouseButtonUp(0))
-                {
-                    pos_end = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                    force = new Vector2(pos_start.x - pos_end.x, pos_start.y - pos_end.y);
-                    discus_shoot(force);
-                    crosshair.GetComponent<SpriteRenderer>().enabled = false;
-                    player_throw();
-                }
-                else
-                {
-                    if (Input.GetMouseButton(0))
-                    {
-                        pos_mov = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                        force = new Vector2(pos_start.x - pos_mov.x, pos_start.y - pos_mov.y);
-                        move_crosshair(force);
                     }
                 }
             }
@@ -177,9 +192,14 @@ public class discus_physic : MonoBehaviour
         gameObject.GetComponent<Animator>().SetBool("raiseDiscus", false);
         gameObject.GetComponent<Animator>().enabled = false;
         gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        foreach (CircleCollider2D c in gameObject.transform.GetComponents(typeof(CircleCollider2D)))
+        {
+            c.enabled = true;
+        }
         //Throw
         player.GetComponent<Animator>().SetBool("throw", true);
         player.GetComponent<Animator>().SetBool("rise", false);
+
     }
 
     
@@ -223,7 +243,12 @@ public class discus_physic : MonoBehaviour
     //Discus_physic Physic
     private void discus_shoot(Vector2 v)
     {
-        
+        //if (check_goal.firstShot==false)
+        if (true)
+        {
+            check_goal.discus_anz--;
+            check_goal.firstShot = true;
+        }
 
         crosshair.transform.position = get_crosshair_position(v);
         float alpha = getAlpha(v);//Festlegung, jeder Swipe nach unten erhöht den Grad
@@ -256,6 +281,7 @@ public class discus_physic : MonoBehaviour
         }
         else
         {
+            /**
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power, (alpha * (factor / 2))));
             //Test
@@ -270,6 +296,7 @@ public class discus_physic : MonoBehaviour
             r3.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
             r4 = GameObject.Find("LeftWall");
             r4.GetComponent<Collider2D>().sharedMaterial = symbol_hit;
+            **/
         }
 
         //debug_text.text = "Angle: " + alpha + '\n';
@@ -381,15 +408,15 @@ public class discus_physic : MonoBehaviour
         return Math.PI * angle / 180.0;
     }
 
+    
 
-
-    //Test ... später löschen!
+    /**
 
     public void setGravity(bool flag)
     {
         gravity = flag;
     }
-
+    **/
 
 
 

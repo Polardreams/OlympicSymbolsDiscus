@@ -24,8 +24,8 @@ public class repeatDialog : MonoBehaviour
 
     public void repeatStage()
     {
-        //SceneManager.LoadScene("Stage "+check_goal.stat_scene_index.ToString());
-        SceneManager.LoadScene("David_playground");//testzwecke
+        SceneManager.LoadScene("Stage "+check_goal.stat_scene_index.ToString());
+        //SceneManager.LoadScene("David_playground");//testzwecke
         dialog.GetComponent<Canvas>().enabled = false;
     }
 

@@ -11,7 +11,7 @@ public class check_goal : MonoBehaviour
     public GameObject[] hit_order = new GameObject[2];//Reihenfolge der Symbole zum Abschuss. Achtung die Tag's müssen gesetzt sein
     public GameObject txt_score;
     public int scene_index;
-    private string nxt_stage;
+    public static string nxt_stage;
 
     public static int index;
     private int index_goal;// Anzahl der bisherigen Treffer (pro Treffer 1x inkrementieren) Liste wird so weitergeführt
@@ -29,6 +29,8 @@ public class check_goal : MonoBehaviour
 
     //Display
     private GameObject HUD_Rings;
+    private GameObject dialog;
+    public static int stat_scene_index;
 
     public GameObject popup_points;
     public GameObject popup_TextMessage;
@@ -51,6 +53,9 @@ public class check_goal : MonoBehaviour
         HUD_Rings = GameObject.Find("HUD");
         index = scene_index;
         firstShot = false;
+
+        dialog = GameObject.Find("UI_repeat_dialog");
+        stat_scene_index = scene_index;
     }
 
     // Update is called once per frame
@@ -262,11 +267,8 @@ public class check_goal : MonoBehaviour
             case 1: medal_index = 0; break;
             case 0: medal_index = 0; break;
         }
-        Invoke("switch_Scene", 2.5f);
-    }
 
-    private void switch_Scene()
-    {
-        SceneManager.LoadScene(nxt_stage, LoadSceneMode.Single);
+        //Open dialog
+        dialog.GetComponent<Canvas>().enabled = true;
     }
 }

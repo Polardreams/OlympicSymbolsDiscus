@@ -14,7 +14,7 @@ public class repeatDialog : MonoBehaviour
 
     public void finishStage()
     {
-        Invoke("switch_Scene", 2.5f);
+        Invoke("switch_Scene", 0f);
         dialog.GetComponent<Canvas>().enabled = false;
     }
     private void switch_Scene()

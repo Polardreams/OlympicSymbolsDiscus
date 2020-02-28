@@ -8,6 +8,10 @@ public class throw_soundPlay : MonoBehaviour
     // Start is called before the first frame update
     public void play_disc_throw()
     {
-        disc_throw.PlayOneShot(disc_throw.clip);
+        if (disc_throw!=null)
+        {
+            disc_throw.PlayOneShot(disc_throw.clip);
+        } 
+        
     }
 }

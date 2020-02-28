@@ -1238,7 +1238,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\n\n\u5929\u91CE\u6765\u4F1F\n\n\n\u5929\u91CE\u6765\u4F1F\n\n\n\u30C7\u30D3\u30C3\u30C9\u30FB\u30D8\u30EB\u30CA\u30F3\u30C7\u30B9\n\n\n\u30A4\u30FC\u30D5\u30A1\u30F3\u30FB\u30E9\u30F3\u30B0\n\n\n\u5C0F\u6797\u3053\u3046\u3059\u3051"
+  m_Text: "\n\u30C7\u30D3\u30C3\u30C9\u30FB\u30D8\u30EB\u30CA\u30F3\u30C7\u30B9\n\u5929\u91CE\u6765\u4F1F\n\n\n\u5929\u91CE\u6765\u4F1F\n\n\n\u30C7\u30D3\u30C3\u30C9\u30FB\u30D8\u30EB\u30CA\u30F3\u30C7\u30B9\n\n\n\u30A4\u30FC\u30D5\u30A1\u30F3\u30FB\u30E9\u30F3\u30B0\n\n\n\u5C0F\u6797\u3053\u3046\u3059\u3051"
 --- !u!222 &596818474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2012,7 +2012,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: [{fileID: 366723192}]
+  m_Children:
+  - {fileID: 366723192}
   m_Father: {fileID: 1985577813}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4217,7 +4218,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.000035, y: 1.000035, z: 1.000035}
-  m_Children: [{fileID: 596818472}]
+  m_Children:
+  - {fileID: 596818472}
   m_Father: {fileID: 1985577813}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

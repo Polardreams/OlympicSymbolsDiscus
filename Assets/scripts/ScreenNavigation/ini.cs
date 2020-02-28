@@ -25,9 +25,9 @@ public class ini : MonoBehaviour
             switch (PlayerPrefs.GetInt("stage" + n.ToString()))
             {
                 case 0: g.transform.GetChild(1).GetComponent<Image>().sprite = null; break;
-                case 1: g.transform.GetChild(1).GetComponent<Image>().sprite = bronze_medal; break;
-                case 2: g.transform.GetChild(1).GetComponent<Image>().sprite = silver_medal; break;
-                case 3: g.transform.GetChild(1).GetComponent<Image>().sprite = gold_medal;  break;
+                case 1: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = bronze_medal; break;
+                case 2: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = silver_medal; break;
+                case 3: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = gold_medal;  break;
             }
 
         }
@@ -49,9 +49,9 @@ public class ini : MonoBehaviour
             switch (PlayerPrefs.GetInt("stage1"))
             {
             case 0: g.transform.GetChild(1).GetComponent<Image>().sprite = null; break;
-            case 1: g.transform.GetChild(1).GetComponent<Image>().sprite = bronze_medal; break;
-            case 2: g.transform.GetChild(1).GetComponent<Image>().sprite = silver_medal; break;
-            case 3: g.transform.GetChild(1).GetComponent<Image>().sprite = gold_medal; break;
+            case 1: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = bronze_medal; break;
+            case 2: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = silver_medal; break;
+            case 3: g.transform.GetChild(1).GetComponent<Image>().enabled = true; g.transform.GetChild(1).GetComponent<Image>().sprite = gold_medal; break;
         }
     }
 
